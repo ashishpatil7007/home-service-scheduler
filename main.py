@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for
+import os
 
 app = Flask(__name__)
 app.secret_key = 'any random string'
@@ -104,5 +105,9 @@ def api_new_service_request():
     insert_request(employee_id, customer_id, is_complete, created_date, request_time, service_type)
     return render_template("new_service_request.html")
 
-
-app.run(debug=True)
+if __name__ == '__main__':
+   if 'PORT' in os.environ:
+      port = os.environ['PORT']
+   else:
+      port= 5000
+   app.run(debug=False,host="0.0.0.0",port=port)
